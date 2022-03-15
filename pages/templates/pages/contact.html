@@ -1,0 +1,32 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Contact Us{% endblock title %}
+
+{% block sidenav %}
+	<li><a href="/">Home</a></li>
+{% endblock sidenav %}
+
+{% block content %}
+	<h2>Contact Us</h2>
+
+	{% if submitted %}
+	<div class="alert alert-success" role="alert">
+  		<p class='success'>
+			Your message was sent successfully, Thanks for contacting Us.
+		</p>
+	</div>
+	{% else %}
+		<form method="Post" class='m-3'>
+			{% csrf_token %}
+		{% for field in form %}
+		<div class="mb-3">
+		    <label>{{ field.label }}</label>
+		    <div >{{ field }}</div>
+  		</div>
+		{% endfor %}
+		<input type="submit" name="Send" class='btn btn-success'>
+		</form>
+	{% endif %}
+
+{% endblock content %}

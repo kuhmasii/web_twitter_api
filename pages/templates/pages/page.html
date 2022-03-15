@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ page.title }}{% endblock title %}
+
+
+{% block sidenav %}
+	{% for page in page_list %}
+	<li>
+		<a href="{% url 'pages:index' %}?q={{ page.permalink }}">{{ page.title }}</a>
+	</li>
+	{% endfor  %}
+{% endblock sidenav %}
+
+
+{% block content %}
+	<h2>Welcome to {{ page.title }} Page :)</h2>
+
+	{% if check %}
+	<div class="row">
+	    <div class="col">
+	     	<div class="card" style="width: 15rem;">
+		  		<img src="{% static 'img/tweet.jpg' %}" class="card-img-top" alt="...">
+			  	<div class="card-body">
+			    <h5 class="card-title">Unfollower Bot</h5>
+			    <p class="card-text">Using AToMates API system, unfollow users that are not following back.</p>
+			    <a href="{% url 'pages:unfollow_bot' %}" class="btn btn-primary">Unfollow</a>
+			  	</div>
+			</div>
+	    </div>
+	    
+	   <div class="col">
+	     	<div class="card" style="width: 15rem;">
+		  		<img src="{% static 'img/twitter.png' %}" class="card-img-top" alt="...">
+			  	<div class="card-body">
+			    <h5 class="card-title">Follower Bot</h5>
+			    <p class="card-text">Using AToMates API system, follow users your account is yet to follow</p>
+			    <a href="{% url 'pages:unfollow_bot' %}" class="btn btn-primary">Follow</a>
+			  	</div>
+			</div>
+	    </div>
+{% comment %} 
+	    <div class="col mt-2">
+	     	<div class="card" style="width: 15rem;">
+		  		<img src="{% static 'img/banner.jpg' %}" class="card-img-top" alt="...">
+			  	<div class="card-body">
+			    <h5 class="card-title">DataStream Bot</h5>
+			    <p class="card-text">Using AToMates API system, get your hometimeline, Usertimeline and Searched data.</p>
+			    <a href="#" class="btn btn-primary">DataStream</a>
+			  	</div>
+			</div>
+	    </div>
+
+	    <div class="col mt-2">
+	     	<div class="card" style="width: 15rem;">
+		  		<img src="{% static 'img/banner.jpg' %}" class="card-img-top" alt="...">
+			  	<div class="card-body">
+			    <h5 class="card-title">AutoTweet Bot</h5>
+			    <p class="card-text">Using AToMates API system, Tweet anytime, anywhere without Twitter App.</p>
+			    <a href="#" class="btn btn-primary">AutoTweet</a>
+			  	</div>
+			</div>
+	    </div> {% endcomment %} 
+  	</div>
+	{% endif %}
+	<hr>
+	<br>
+	<div class="container">
+		<p>{{ page.body_text|linebreaksbr }}</p>
+	</div>
+
+{% endblock content %}

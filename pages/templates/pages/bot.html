@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}untitled{% endblock title %}
+
+
+{% block sidenav %}
+	<li><a href="/">Home</a></li>
+{% endblock sidenav %}
+
+
+{% block content %}
+<div class='row m-5'>
+    <div class='col'>
+        <form action='{% url "pages:unfollow_bot" %}'>
+            <input type=submit class="btn btn-primary btn-lg" name='token' value='get token' target="_blank">
+        </form> 
+        <hr>
+        {% if endpoint %}
+            <p>Visit this url in another browser: {{ endpoint }}</p>
+        {% endif %}  
+    </div>
+    <div class='col'>
+        <form method="POST" action='{% url "pages:unfollow_bot" %}'>
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" name='token_num' placeholder="submit token">
+            </div>
+            <select class="form-select mb-3" name='count' aria-label="Default select example">
+                <option selected>Unfollow Once?</option>
+                <option value="100">100</option>
+                <option value="150">150</option>
+                <option value="200">200</option>
+            </select>
+            <input type="submit" class="btn btn-primary" value='submit'>
+        </form>
+    </div
+</div>
+{% endblock content %}
