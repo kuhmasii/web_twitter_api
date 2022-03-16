@@ -18,7 +18,7 @@ def get_endpoint(apikey,apisecretkey):
     redirect_url = auth.get_authorization_url()
     return redirect_url
 
-def getaccess_token(userpin, apikey, apisecretkey):
+def getaccess_token(userpin, apikey, apisecretkey, callback):
     """Function uses token to access the API """
     auth = tweepy.OAuth1UserHandler(apikey, apisecretkey)
     auth.get_access_token(userpin)

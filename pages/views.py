@@ -9,7 +9,7 @@ from .models import Page
 
 def index(request):
 	page_list =  Page.objects.all()
-	urls = ['', " ", "/"]
+	urls = ('', " ", "/")
 	check = False
 	if (query:= request.GET.get("q")):
 		page = get_object_or_404(Page, permalink__iexact=query)
@@ -34,7 +34,11 @@ def contact(request):
 			    subject=subject,
 			    message=message,
 			    from_email= settings.EMAIL_HOST_USER,
-			    recipient_list=['olaisaiah54@gmail.com'],
+			    recipient_list=[
+					settings.EMAIL_HOST_USER,
+					'olaisaiah54@gmail.com',
+					'isaiaholaoye91@gmail.com'
+				],
 			    fail_silently=False,
 			)
 			return redirect('/contact?submitted=True')
