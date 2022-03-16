@@ -1,11 +1,10 @@
-from django.shortcuts import redirect
+from django.conf import settings
 import tweepy
-import os
 
 def get_apikeys():
     """function returns API keys from env."""
-    api_key = os.environ.get('API_KEY')
-    api_secret_key = os.environ.get("API_KEY_SECRET")
+    api_key = settings.API_KEY
+    api_secret_key = settings.API_SECRET_KEY
 
     return api_key, api_secret_key
 

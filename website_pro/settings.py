@@ -10,7 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+import environ
 from pathlib import Path
+
+env = environ.Env(
+    DEBUG=(bool, False)
+    )
+
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +27,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^mc!uq-2z(gl4fm3xgr_@l395p2fi536*cu!oc7m%kfi)%0k*#'
+SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["ATomates.pythonanywhere.com"]
 
 
 # Application definition
@@ -79,8 +86,11 @@ WSGI_APPLICATION = 'website_pro.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env.str('NAME'),
+        'USER':env.str('USER'),
+        'PASSWORD':env.str('PASSWORD'),
+        'HOST':env.str('HOST'),
     }
 }
 
@@ -119,11 +129,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_ROOT = '/home/ATomates/website_pro/static'
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
+STATIC_URL = 'static/'
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static'
+# ]
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -132,8 +145,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST= os.environ.get('EMAIL_HOST')
+EMAIL_HOST= env.str('EMAIL_HOST')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER= os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD= os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER= env.str('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD= env.str('EMAIL_HOST_PASSWORD')
+
+# API
+API_KEY = env.str('API_KEY')
+API_SECRET_KEY = env.str('API_SECRET_KEY')
