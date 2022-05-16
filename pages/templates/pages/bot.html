@@ -12,11 +12,14 @@
 <div class='row m-5'>
     <div class='col'>
         <form action='{% url "pages:unfollow_bot" %}'>
-            <input type=submit class="btn btn-primary btn-lg" name='token' value='get token' target="_blank">
+            <input type=submit class="btn btn-primary btn-lg" name='token' value='gettoken'>
         </form> 
         <hr>
         {% if endpoint %}
-            <p>Visit this url in another browser: {{ endpoint }}</p>
+            <p>
+                <strong>Visit this url in another browser:</strong>
+                <a href="{{ endpoint }}" target="_blank">{{ endpoint }}</a>
+            </p>
         {% endif %}  
     </div>
     <div class='col'>
@@ -27,12 +30,15 @@
             </div>
             <select class="form-select mb-3" name='count' aria-label="Default select example">
                 <option selected>Unfollow Once?</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
                 <option value="100">100</option>
-                <option value="150">150</option>
-                <option value="200">200</option>
             </select>
             <input type="submit" class="btn btn-primary" value='submit'>
         </form>
-    </div
+    </div>
 </div>
 {% endblock content %}
