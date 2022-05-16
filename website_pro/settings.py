@@ -15,14 +15,13 @@ from pathlib import Path
 
 env = environ.Env(
     DEBUG=(bool, False)
-    )
+)
 
-environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+environ.Env.read_env(BASE_DIR / '.env')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -30,9 +29,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = env.str('DEBUG')
 
-ALLOWED_HOSTS = ["ATomates.pythonanywhere.com"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -86,14 +85,10 @@ WSGI_APPLICATION = 'website_pro.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': env.str('NAME'),
-        'USER':env.str('USER'),
-        'PASSWORD':env.str('PASSWORD'),
-        'HOST':env.str('HOST'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -129,13 +124,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_ROOT = '/home/ATomates/website_pro/static'
 
 STATIC_URL = 'static/'
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'static'
-# ]
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
 
 
 # Default primary key field type
@@ -145,12 +139,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST= env.str('EMAIL_HOST')
+EMAIL_HOST = env.str('EMAIL_HOST')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER= env.str('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD= env.str('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
 
 # API
 API_KEY = env.str('API_KEY')
 API_SECRET_KEY = env.str('API_SECRET_KEY')
+ACCESS_TOKEN = env.str('ACCESS_TOKEN')
+ACCESS_TOKEN_SECRET = env.str('ACCESS_TOKEN_SECRET')
+
+
+# in production mode
+if not DEBUG:
+    ALLOWED_HOSTS = ["atomates.pythonanywhere.com"]
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': env.str('NAME'),
+            'USER': env.str('USER'),
+            'PASSWORD': env.str('PASSWORD'),
+            'HOST': env.str('HOST'),
+        }
+    }
+    STATIC_ROOT = '/home/ATomates/website_pro/static'
