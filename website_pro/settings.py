@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-import os
 import environ
 from pathlib import Path
 
@@ -29,10 +28,10 @@ environ.Env.read_env(BASE_DIR / '.env')
 SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.str('DEBUG')
+
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -151,10 +150,9 @@ API_SECRET_KEY = env.str('API_SECRET_KEY')
 ACCESS_TOKEN = env.str('ACCESS_TOKEN')
 ACCESS_TOKEN_SECRET = env.str('ACCESS_TOKEN_SECRET')
 
-
-# in production mode
+# Inside production environmen
 if not DEBUG:
-    ALLOWED_HOSTS = ["atomates.pythonanywhere.com"]
+    ALLOWED_HOSTS = ['atomates.pythonanywhere.com']
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -165,3 +163,5 @@ if not DEBUG:
         }
     }
     STATIC_ROOT = '/home/ATomates/website_pro/static'
+
+
